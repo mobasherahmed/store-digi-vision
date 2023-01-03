@@ -1,0 +1,26 @@
+<mat-card>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="img-holder">
+                    <img [src]="productDetails?.image" alt="product">
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>{{productDetails?.title}}</h2>
+                <p>{{productDetails?.rating.rate}}</p>
+                <p>{{productDetails?.rating.count}}</p>
+                <hr>
+                <h4>{{productDetails?.description}}</h4>
+                <p> 
+                   <del class="mx-2"><strong>${{productDetails?.price + 100}}</strong></del>
+                    <strong>${{productDetails?.price}}</strong> 
+                </p>
+                <hr>
+                <h3>Category : {{productDetails?.category}}</h3>
+              
+            </div>
+        </div>
+
+    </mat-card-content>
+</mat-card>
