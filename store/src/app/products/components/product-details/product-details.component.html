@@ -1,26 +1,33 @@
 <mat-card>
-    <mat-card-content>
+    <mat-card-content *ngIf="!showSpinner">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 img-box">
                 <div class="img-holder">
-                    <img [src]="productDetails?.image" alt="product">
+                    <img [src]="productDetails.image" alt="product">
                 </div>
             </div>
             <div class="col-md-8">
-                <h2>{{productDetails?.title}}</h2>
-                <p>{{productDetails?.rating.rate}}</p>
-                <p>{{productDetails?.rating.count}}</p>
+                <h2>{{productDetails.title}}</h2>
+                <div class="book-rating">
+                    <mat-icon  *ngFor="let fullStar of fullStars">star</mat-icon>
+                    <mat-icon  *ngIf="hasAnHalfStar">star_half</mat-icon>
+                    <mat-icon  *ngFor="let emptyStart of emptyStars">star_border</mat-icon>
+                    <span class="mx-1">({{productDetails.rating.count}} review)</span>
+                </div>
                 <hr>
-                <h4>{{productDetails?.description}}</h4>
+                <h4>{{productDetails.description}}</h4>
                 <p> 
-                   <del class="mx-2"><strong>${{productDetails?.price + 100}}</strong></del>
-                    <strong>${{productDetails?.price}}</strong> 
+                   <del class="mx-2"><strong>${{productDetails.price + 100}}</strong></del>
+                    <strong>${{productDetails.price}}</strong> 
                 </p>
                 <hr>
-                <h3>Category : {{productDetails?.category}}</h3>
+                <h3> <strong>Category </strong> : {{productDetails.category}}</h3>
               
             </div>
         </div>
 
     </mat-card-content>
+
+    <mat-spinner *ngIf="showSpinner"></mat-spinner>
+
 </mat-card>

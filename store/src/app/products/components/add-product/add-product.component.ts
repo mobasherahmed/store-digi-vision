@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators , FormGroupDirective} from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -9,29 +10,39 @@ import { ProductService } from '../../services/product.service';
 })
 export class AddProductComponent implements OnInit {
 
-  // @ts-ignore
   productForm:FormGroup;
-
-  constructor(private fb:FormBuilder,private product:ProductService) { }
-
-  ngOnInit(): void {
-    this.intializeForm();
+  showSpinner:boolean = false;
+  showAlert:boolean = false;
+  @ViewChild(FormGroupDirective) formGroupDirective?: FormGroupDirective;
+  
+  constructor(private fb:FormBuilder,private product:ProductService) { 
+    this.productForm = this.fb.group({
+      title:['',Validators.required],
+      price:['',Validators.required],
+      description:['',Validators.required],
+      image:['',[Validators.required,Validators.pattern(environment.urlRegex)]],
+      category:['',Validators.required],
+      })
   }
 
-  intializeForm(){
-   this.productForm = this.fb.group({
-    title:['',Validators.required],
-    price:['',Validators.required],
-    description:['',Validators.required],
-    image:['',Validators.required],
-    category:['',Validators.required],
+  ngOnInit(): void {}
+
+  addProduct(){
+    this.showSpinner = true;
+    const product = this.productForm.value;
+    this.product.addProduct(product).subscribe(res=>{
+      this.showSpinner = false;
+      this.showAlert = true;
+      this.formGroupDirective?.resetForm()
+      setTimeout(() => {
+        this.showAlert=false;
+        }, 2000);
     })
   }
 
-  addProduct(){
-    const product = this.productForm.value;
-    this.product.addProduct(product).subscribe(res=>this.productForm.reset())
-  }
 
+ get requiredErrorMsg():string{
+  return environment.requiredErrorMsg;
+ } 
 
 }

@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  baseUrl:'https://fakestoreapi.com/products'
+  baseUrl:'https://fakestoreapi.com/products',
+  urlRegex:/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,
+  requiredErrorMsg:'This feild is required'
 };
 
 /*
